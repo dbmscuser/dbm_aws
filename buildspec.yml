@@ -2,12 +2,13 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      docker: 19
     commands:
       - echo Installing Docker...
+      - yum update -y
+      - amazon-linux-extras enable docker
       - yum install -y docker
       - service docker start
+      - usermod -a -G docker ec2-user
   build:
     commands:
       - echo Building and running DBmaestro deployment container...
