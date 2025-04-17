@@ -3,12 +3,11 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing Docker...
+      - echo Installing Docker on Amazon Linux 2023...
       - yum update -y
-      - amazon-linux-extras enable docker
       - yum install -y docker
-      - service docker start
-      - usermod -a -G docker ec2-user
+      - systemctl start docker || service docker start || dockerd &
+      - usermod -a -G docker ec2-user || true
   build:
     commands:
       - echo Building and running DBmaestro deployment container...
