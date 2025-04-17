@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+    commands:
+      - echo Installing Docker...
+      - yum install -y docker
+      - service docker start
+  build:
+    commands:
+      - echo Building and running DBmaestro deployment container...
+      - docker build -t dbmaestro-runner .
+      - docker run dbmaestro-runner
