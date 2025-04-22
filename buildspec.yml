@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    EXECUTE_UPGRADE: "true"         # or "falsec"
+    EXECUTE_UPGRADE: "true"         # or "falssec"
     PACKAGE_NAME: "V11"             # your package name
 
 phases:
