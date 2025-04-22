@@ -2,8 +2,7 @@ version: 0.2
 
 env:
   parameter-store:
-    STAGE_FLAGS: "/dbmaestro/stages/upgrade"
-    PACKAGE_NAME: "V11"
+    STAGE_FLAGS: "/dbmaestro/stages/upgrade/V11"    
 phases:
   install:
     commands:
@@ -15,6 +14,7 @@ phases:
   pre_build:
     commands:
       - export EXECUTE_UPGRADE=$(echo $STAGE_FLAGS | grep -o 'execute_upgrade=[^&]*' | cut -d= -f2)
+      - export PACKAGE_NAME=$(echo $STAGE_FLAGS | grep -o 'execute_upgrade=[^&]*' | cut -d= -f3)
       
   build:
     commands:
