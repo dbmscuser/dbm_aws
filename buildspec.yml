@@ -1,5 +1,8 @@
 version: 0.2
 
+env:
+  parameter-store:
+    STAGE_FLAGS: "/dbmaestro/stages/upgrade/v11"
 phases:
   install:
     commands:
@@ -8,8 +11,22 @@ phases:
       - yum install -y docker
       - systemctl start docker || service docker start || dockerd &
       - usermod -a -G docker ec2-user || true
+  pre_build:
+    commands:
+      - export EXECUTE_UPGRADE=$(echo $STAGE_FLAGS | grep -o 'execute_upgrade=[^&]*' | cut -d= -f2)
+      - export PACKAGE_NAME=$(echo $STAGE_FLAGS | grep -o 'package_name=[^&]*' | cut -d= -f3)
   build:
     commands:
       - echo Building and running DBmaestro deployment container...
       - docker build -t dbmaestro-runner .
       - docker run dbmaestro-runner
+  execute:
+    commands:
+      - |
+        if [ "$EXECUTE_UPGRADE" = "true" ]; then
+          echo "Running upgrade for package: $PACKAGE_NAME"
+          java -jar DBmaestroAgent.jar -Upgrade -PackageName "$PACKAGE_NAME"
+        else
+          echo "Standard build process"
+          docker build -t dbmaestro-runner .
+        fi
