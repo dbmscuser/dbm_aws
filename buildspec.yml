@@ -30,7 +30,7 @@ phases:
       - |
         if [ "$EXECUTE_UPGRADE" = "true" ]; then
           echo "Running upgrade for package: $PACKAGE_NAME"
-          java -jar DBmaestroAgent.jar -Upgrade -ProjectName "PLANHUB_DEMO" -EnvName "Release Source" -PackageName "$PACKAGE_NAME" -BackupBehavior True -RestoreBehavior True -Server "DOPX-BERKE:8020" -AuthType DBmaestroAccount -UserName "poc@dbmaestro.com" -Password "7KI5tL3ywYAZLB8FUY9fzJyekemgtG45"
+          java -jar DBmaestroAgent.jar -Upgrade -ProjectName "PLANHUB_DEMO" -EnvName "Release Source" -PackageName "$PACKAGE_NAME" -BackupBehavior True -RestoreBehavior True -Server "35.209.117.147:8020" -AuthType DBmaestroAccount -UserName "poc@dbmaestro.com" -Password "7KI5tL3ywYAZLB8FUY9fzJyekemgtG45"
         else
           echo "Standard build process"
           docker build -t dbmaestro-runner .
